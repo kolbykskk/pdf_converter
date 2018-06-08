@@ -4,11 +4,29 @@
     <title>PdfConverter</title>
     <%= csrf_meta_tags %>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <% if flash[:notice] %>
+        <div id="notice_wrapper">
+          <p class="notice"><%= flash[:notice] %></p>
+        </div>
+      <% elsif alert %>
+        <div id="notice_wrapper_alert">
+          <p class="notice"><%= flash[:alert] %></p>
+        </div>
+      <% end %>
+      <% if flash[:info] %>
+      <div id="notice_wrapper_info">
+        <p class="notice"><%= flash[:info].html_safe %></p>
+      </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>

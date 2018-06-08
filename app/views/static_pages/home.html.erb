@@ -1,0 +1,20 @@
+<% if session[:status_error] %>
+<div class="status_error"><h3><%= session[:status_error] %></h3></div>
+<% end %>
+
+<% if session[:status_success] %>
+<div class="status_success"><h3><%= session[:status_success] %></h3></div>
+<% end %>
+
+<div class="form">
+  <%= link_to "Run New Sheet Generator", static_generator_path, method: :post, class: 'btn btn-success generator-btn' %>
+
+  <%= form_tag "/static_pages/home", method: :patch, multipart: true do %>
+    <label for="upload_" class="custom-file-upload">
+        <span class="glyphicon glyphicon-download-alt"></span> Upload .PDF Files (ctrl+click for multi-select)
+    </label>
+    <%= file_field_tag "upload[]", multiple: true, accept: "application/pdf", required: true %><br>
+    <%= text_field_tag :google_sheet_id, nil, placeholder: "Google Sheet ID (optional)", class: 'form-control' %><br>
+    <%= submit_tag "Convert and Import", class: 'btn btn-success form-control' %>
+  <% end %>
+</div>
