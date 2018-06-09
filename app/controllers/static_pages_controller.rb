@@ -13,7 +13,17 @@ class StaticPagesController < ApplicationController
 
   def home
     if params[:upload]
+
+      #check to make sure only .pdf files were uploaded
+      params[:upload].each do |file|
+        if File.extname(file.path) != ".pdf"
+          flash[:alert] = "You can only upload .PDF files"
+          return redirect_to root_path
+        end
+      end
+
       all_names = []
+      all_emails = []
       params[:upload].each_with_index do |file, index|
         read_file = File.read(file.tempfile)
         uploaded_file = File.open("uploaded_file_#{index}.pdf", "wb") { |file|
@@ -25,8 +35,9 @@ class StaticPagesController < ApplicationController
           File.delete("page_#{i}.pdf")
         end
         File.rename("page_1.pdf", "final_#{index+1}.pdf")
-        all_names.push(Array(file.original_filename))
-    end
+        all_names.push(Array("#{params[:name]}"))
+        all_emails.push(Array("#{params[:email]}"))
+      end
 
 
       # convert each .pdf file to a .csv
@@ -51,14 +62,6 @@ class StaticPagesController < ApplicationController
       end
 
       temp_sheet = $drive.create("finalized")
-
-      #check to make sure only .pdf files were uploaded
-      params[:upload].each do |file|
-        if File.extname(file.path) != ".pdf"
-          flash[:alert] = "You can only upload .PDF files"
-          return redirect_to root_path
-        end
-      end
 
       all_pulled_values = []
 
@@ -94,7 +97,7 @@ class StaticPagesController < ApplicationController
 
       while cell == true
         begin
-          first_empty_row = $drive.sheet_get_values("#{params[:google_sheet_id]}", "A#{index_for_append}")
+          first_empty_row = $drive.sheet_get_values("#{params[:google_sheet_id]}", "B#{index_for_append}")
         rescue Google::Apis::ClientError => error
           cell = false;
           break
@@ -106,16 +109,19 @@ class StaticPagesController < ApplicationController
         end
       end
 
-      puts "$$$$$$$$$$$$$$$$$$$$$#{index_for_append}"
+      body = {"values": all_names}
+
+      $drive.sheet_append_values("#{params[:google_sheet_id]}", "A2", body)
+
+      body = {"values": all_emails}
+
+      $drive.sheet_append_values("#{params[:google_sheet_id]}", "B#{index_for_append}", body)
 
       #######
 
-      body = {"values": all_names}
-      $drive.sheet_append_values("#{params[:google_sheet_id]}", "A2", body)
-
       all_pulled_values.each_with_index do |array, i|
         body = {"values": [array]}
-        $drive.sheet_append_values("#{params[:google_sheet_id]}", "B#{index_for_append}:AF#{index_for_append}", body)
+        $drive.sheet_append_values("#{params[:google_sheet_id]}", "C#{index_for_append}:AG#{index_for_append}", body)
         index_for_append += 1
       end
 
