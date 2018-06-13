@@ -3,8 +3,8 @@ development:
 
 test:
   adapter: async
-# 
-# production:
-#   adapter: redis
-#   url: redis://localhost:4321
-#   channel_prefix: pdf_converter_production
+
+production:
+  adapter: redis
+  url: redis://redistogo:de9961cc6950ac6c94ab14396ed2303a@cod.redistogo.com:11141
+  channel_prefix: pdf_converter_production
