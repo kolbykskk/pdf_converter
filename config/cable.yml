@@ -5,6 +5,6 @@ test:
   adapter: async
 
 production:
-  url: redis://redistogo:de9961cc6950ac6c94ab14396ed2303a@cod.redistogo.com:11141
-  host: cod.redistogo.com
-  port: 11141
+  adapter: redis
+  url: redis://redistogo:e28236019c61c01055683b3f994b510e@cod.redistogo.com:11199/
+  channel _prefix: pdf_converter_production
