@@ -29,12 +29,6 @@ class StaticPagesController < ApplicationController
         uploaded_file = File.open("uploaded_file_#{index}.pdf", "wb") { |file|
           file.write(read_file)
         }
-        final_file = File.basename("uploaded_file_#{index}.pdf")
-        PDF::Burst.new(final_file).run!
-        4.downto(2).each do |i|
-          File.delete("page_#{i}.pdf")
-        end
-        File.rename("page_1.pdf", "final_#{index+1}.pdf")
         all_names.push(Array("#{params[:name]}"))
         all_emails.push(Array("#{params[:email]}"))
       end
@@ -43,10 +37,6 @@ class StaticPagesController < ApplicationController
       # convert each .pdf file to a .csv
 
       params[:upload].each_with_index do |file, index|
-        read_file = File.read("final_#{index+1}.pdf")
-        uploaded_file = File.open("uploaded_file_#{index}.pdf", 'w') { |file|
-          file.write(read_file)
-        }
         final_file = File.basename("uploaded_file_#{index}.pdf")
 
         response = PageTextReceiver.new(params)
@@ -131,7 +121,6 @@ class StaticPagesController < ApplicationController
       $drive.delete("#{temp_sheet.id}")
 
       params[:upload].each_with_index do |file, i|
-        File.delete("final_#{i+1}.pdf")
         File.delete("response_#{i}.csv")
         File.delete("uploaded_file_#{i}.pdf")
       end

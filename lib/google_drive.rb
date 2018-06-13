@@ -7,11 +7,20 @@ require 'googleauth'
 require 'googleauth/stores/redis_token_store'
 
 class MyDrive
-  OOB_URI = "https://dry-forest-25428.herokuapp.com/oauth2callback"
+  if ENV['REDIS_URL']
+    OOB_URI = "https://dry-forest-25428.herokuapp.com/oauth2callback"
+  else
+    OOB_URI = "http://localhost:3000/oauth2callback"
+  end
+
   attr_writer :authorizer, :drive, :redirect_uri, :credentials
 
   def initialize
-    client_id = Google::Auth::ClientId.from_file("#{Rails.root}/lib/client_secret.json")
+    if ENV['REDIS_URL']
+      client_id = Google::Auth::ClientId.from_file("#{Rails.root}/lib/client_secret.json")
+    else
+      client_id = Google::Auth::ClientId.from_file("#{Rails.root}/lib/client_secret_2.json")
+    end
     scope = ['https://www.googleapis.com/auth/drive']
     token_store = Google::Auth::Stores::RedisTokenStore.new(redis: $redis)
     @authorizer = Google::Auth::UserAuthorizer.new(

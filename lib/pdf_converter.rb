@@ -5,7 +5,12 @@ class PageTextReceiver
   end
 
   include HTTMultiParty
-  base_uri 'https://dry-forest-25428.herokuapp.com/'
+  if ENV['REDIS_URL']
+    base_uri 'https://dry-forest-25428.herokuapp.com'
+  else
+    base_uri 'http://localhost:3000'
+  end
+  
   def index(value)
     value
   end
