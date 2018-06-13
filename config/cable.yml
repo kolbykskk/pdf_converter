@@ -4,7 +4,7 @@ development:
 test:
   adapter: async
 
-production: &production
-  :url: redis://redistogo:de9961cc6950ac6c94ab14396ed2303a@cod.redistogo.com:11141
-  :host: cod.redistogo.com
-  :port: 11141
+production:
+  url: redis://redistogo:de9961cc6950ac6c94ab14396ed2303a@cod.redistogo.com:11141
+  host: cod.redistogo.com
+  port: 11141
