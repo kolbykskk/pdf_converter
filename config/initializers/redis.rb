@@ -1,1 +1,3 @@
-$redis = Redis.new(:host => 'cod.redistogo.com', :port => 11141)
+if ENV["REDISCLOUD_URL"]
+  $redis = Redis.new(:url => ENV["REDISCLOUD_URL"])
+end
