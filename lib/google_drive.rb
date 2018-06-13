@@ -7,7 +7,7 @@ require 'googleauth'
 require 'googleauth/stores/redis_token_store'
 
 class MyDrive
-  OOB_URI = "localhost:3000/oauth2callback"
+  OOB_URI = "https://dry-forest-25428.herokuapp.com/oauth2callback"
   attr_writer :authorizer, :drive, :redirect_uri, :credentials
 
   def initialize

@@ -5,7 +5,7 @@ class PageTextReceiver
   end
 
   include HTTMultiParty
-  base_uri 'http://localhost:3000'
+  base_uri 'https://dry-forest-25428.herokuapp.com/'
   def index(value)
     value
   end
