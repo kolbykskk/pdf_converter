@@ -130,6 +130,12 @@ class StaticPagesController < ApplicationController
 
       $drive.delete("#{temp_sheet.id}")
 
+      params[:upload].each_with_index do |file, i|
+        File.delete("final_#{i+1}.pdf")
+        File.delete("response_#{i}.csv")
+        File.delete("uploaded_file_#{i}.pdf")
+      end
+
 
       flash[:success] = "Success!"
       redirect_to root_path
