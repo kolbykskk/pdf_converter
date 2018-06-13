@@ -1,10 +1,10 @@
-# development:
-#   adapter: async
-#
-# test:
-#   adapter: async
-#
-# production:
-#   adapter: redis
-#   url: redis://redistogo:de9961cc6950ac6c94ab14396ed2303a@cod.redistogo.com:11141
-#   channel_prefix: pdf_converter_production
+development:
+  adapter: async
+
+test:
+  adapter: async
+
+production: &production
+  :url: redis://redistogo:de9961cc6950ac6c94ab14396ed2303a@cod.redistogo.com:11141
+  :host: cod.redistogo.com
+  :port: 11141
