@@ -69,7 +69,7 @@ class StaticPagesController < ApplicationController
         if response.values
           response = $drive.sheet_get_values("#{temp_sheet.id}", "B#{first_val}:B#{second_val}")
           all_pulled_values.push response.values
-          first_val = second_val + 9
+          first_val = second_val + 141
           second_val = first_val + 30
         else
           cell = false;
