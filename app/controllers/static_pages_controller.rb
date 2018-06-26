@@ -2,6 +2,8 @@ require 'open-uri'
 
 class StaticPagesController < ApplicationController
 
+  sheet_id = "1j1PrgPlDBKHoPbvJUJjjh1wp46Z_Z7WaYDthXd5Gvdg"
+
   def set_google_drive_token
     if request['code'] == nil
       redirect_to($drive.authorization_url)
@@ -87,7 +89,7 @@ class StaticPagesController < ApplicationController
 
       while cell == true
         begin
-          first_empty_row = $drive.sheet_get_values("#{params[:google_sheet_id]}", "B#{index_for_append}")
+          first_empty_row = $drive.sheet_get_values("#{sheet_id}", "B#{index_for_append}")
         rescue Google::Apis::ClientError => error
           cell = false;
           break
@@ -101,17 +103,17 @@ class StaticPagesController < ApplicationController
 
       body = {"values": all_names}
 
-      $drive.sheet_append_values("#{params[:google_sheet_id]}", "A2", body)
+      $drive.sheet_append_values("#{sheet_id}", "A2", body)
 
       body = {"values": all_emails}
 
-      $drive.sheet_append_values("#{params[:google_sheet_id]}", "B#{index_for_append}", body)
+      $drive.sheet_append_values("#{sheet_id}", "B#{index_for_append}", body)
 
       #######
 
       all_pulled_values.each_with_index do |array, i|
         body = {"values": [array]}
-        $drive.sheet_append_values("#{params[:google_sheet_id]}", "C#{index_for_append}:AG#{index_for_append}", body)
+        $drive.sheet_append_values("#{sheet_id}", "C#{index_for_append}:AG#{index_for_append}", body)
         index_for_append += 1
       end
 
