@@ -2,8 +2,6 @@ require 'open-uri'
 
 class StaticPagesController < ApplicationController
 
-  sheet_id = "1j1PrgPlDBKHoPbvJUJjjh1wp46Z_Z7WaYDthXd5Gvdg"
-
   def set_google_drive_token
     if request['code'] == nil
       redirect_to($drive.authorization_url)
@@ -14,6 +12,8 @@ class StaticPagesController < ApplicationController
   end
 
   def home
+    sheet_id = "1j1PrgPlDBKHoPbvJUJjjh1wp46Z_Z7WaYDthXd5Gvdg"
+
     if params[:upload]
 
       #check to make sure only .pdf files were uploaded
