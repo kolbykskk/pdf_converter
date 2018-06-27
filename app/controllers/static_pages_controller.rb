@@ -12,7 +12,7 @@ class StaticPagesController < ApplicationController
   end
 
   def home
-    sheet_id = "1j1PrgPlDBKHoPbvJUJjjh1wp46Z_Z7WaYDthXd5Gvdg"
+    sheet_id = "1qYyVQIio4wD_HvBHopC4Jcr8RyUjZ6ey9Maxqr-ZLw0"
 
     if params[:upload]
 
