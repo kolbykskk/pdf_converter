@@ -16,11 +16,11 @@ class MyDrive
   attr_writer :authorizer, :drive, :redirect_uri, :credentials
 
   def initialize
-    if ENV['REDIS_URL']
+    # if ENV['REDIS_URL']
+    #   client_id = Google::Auth::ClientId.from_file("#{Rails.root}/lib/client_secret.json")
+    # else
       client_id = Google::Auth::ClientId.from_file("#{Rails.root}/lib/client_secret.json")
-    else
-      client_id = Google::Auth::ClientId.from_file("#{Rails.root}/lib/client_secret_2.json")
-    end
+    # end
     scope = ['https://www.googleapis.com/auth/drive']
     token_store = Google::Auth::Stores::RedisTokenStore.new(redis: $redis)
     @authorizer = Google::Auth::UserAuthorizer.new(
