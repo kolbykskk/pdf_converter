@@ -128,7 +128,7 @@ class StaticPagesController < ApplicationController
       end
 
 
-      flash[:success] = "Success!"
+      flash[:notice] = "Thank You! Your Hexaco Results Were Submitted Successfully."
       redirect_to root_path
     end
   end
