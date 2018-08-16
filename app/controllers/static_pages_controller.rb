@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'date'
 
 class StaticPagesController < ApplicationController
 
@@ -26,6 +27,7 @@ class StaticPagesController < ApplicationController
 
       all_names = []
       all_emails = []
+      all_dates = []
       params[:upload].each_with_index do |file, index|
         read_file = File.read(file.tempfile)
         uploaded_file = File.open("uploaded_file_#{index}.pdf", "wb") { |file|
@@ -33,6 +35,7 @@ class StaticPagesController < ApplicationController
         }
         all_names.push(Array("#{params[:name]}"))
         all_emails.push(Array("#{params[:email]}"))
+        all_dates.push(Array(Date.today.strftime("%Y-%m-%d")))
       end
 
 
@@ -101,19 +104,24 @@ class StaticPagesController < ApplicationController
         end
       end
 
-      body = {"values": all_names}
+
+      body = {"values": all_dates}
 
       $drive.sheet_append_values("#{sheet_id}", "A2", body)
 
+      body = {"values": all_names}
+
+      $drive.sheet_append_values("#{sheet_id}", "B2", body)
+
       body = {"values": all_emails}
 
-      $drive.sheet_append_values("#{sheet_id}", "B#{index_for_append}", body)
+      $drive.sheet_append_values("#{sheet_id}", "C#{index_for_append}", body)
 
       #######
 
       all_pulled_values.each_with_index do |array, i|
         body = {"values": [array]}
-        $drive.sheet_append_values("#{sheet_id}", "C#{index_for_append}:AG#{index_for_append}", body)
+        $drive.sheet_append_values("#{sheet_id}", "D#{index_for_append}:AH#{index_for_append}", body)
         index_for_append += 1
       end
 
