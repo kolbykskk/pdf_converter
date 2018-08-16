@@ -85,6 +85,8 @@ class StaticPagesController < ApplicationController
         all_pulled_values[index].map! { |i| i.join() }
       end
 
+      puts "%^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{all_pulled_values}"
+
       # Checks to see where the next empty row is to place new content
 
       cell = true
