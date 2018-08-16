@@ -92,7 +92,7 @@ class StaticPagesController < ApplicationController
 
       while cell == true
         begin
-          first_empty_row = $drive.sheet_get_values("#{sheet_id}", "B#{index_for_append}")
+          first_empty_row = $drive.sheet_get_values("#{sheet_id}", "A#{index_for_append}")
         rescue Google::Apis::ClientError => error
           cell = false;
           break
