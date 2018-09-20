@@ -85,8 +85,6 @@ class StaticPagesController < ApplicationController
         all_pulled_values[index].map! { |i| i.join() }
       end
 
-      puts "%^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{all_pulled_values}"
-
       # Checks to see where the next empty row is to place new content
 
       cell = true
@@ -124,6 +122,8 @@ class StaticPagesController < ApplicationController
       all_pulled_values.each_with_index do |array, i|
         body = {"values": [array]}
         $drive.sheet_append_values("#{sheet_id}", "D#{index_for_append}:AH#{index_for_append}", body)
+        body = {"values": [0, 0]}
+        $drive.sheet_append_values("#{sheet_id}", "AI#{index_for_append}:AJ#{index_for_append}", body)
         index_for_append += 1
       end
 
